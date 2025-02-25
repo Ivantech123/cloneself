@@ -20,6 +20,7 @@ class PersonaBot:
         self.messages = []
         self.system_prompt = ""
         self.conversation_history = {}
+        self.voice_enabled = {}  # Хранит настройки голоса для каждого пользователя
         self.tone_patterns = {
             'humor': [
                 r'#ЮС',
@@ -141,15 +142,48 @@ class PersonaBot:
         
     async def start_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Обработчик команды /start"""
+        user_id = update.effective_user.id
+        self.voice_enabled[user_id] = False  # По умолчанию голос выключен
+        
         await update.message.reply_text(
-            'Привет! Я бот, который общается в стиле канала. Я умею шутить и быть серьезным, в зависимости от ситуации. Напиши мне что-нибудь!'
+            'Привет! Я бот, который общается в стиле канала. Я умею шутить и быть серьезным.\n'
+            'Используй /voice для включения/выключения голосовых сообщений!'
         )
 
     async def help_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Обработчик команды /help"""
         await update.message.reply_text(
-            'Я анализирую твои сообщения и отвечаю в подходящем стиле. Если хочешь пошутить - пиши неформально. Для серьезных тем - пиши по делу.'
+            'Доступные команды:\n'
+            '/start - Начать общение\n'
+            '/voice - Включить/выключить голосовые сообщения\n'
+            '/help - Показать это сообщение\n\n'
+            'Просто пиши сообщения, и я буду отвечать в нужном стиле!'
         )
+
+    async def voice_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Обработчик команды /voice"""
+        user_id = update.effective_user.id
+        self.voice_enabled[user_id] = not self.voice_enabled.get(user_id, False)
+        status = "включены" if self.voice_enabled[user_id] else "выключены"
+        await update.message.reply_text(f"Голосовые сообщения {status}!")
+
+    async def generate_voice(self, text):
+        """Генерирует голосовое сообщение с помощью OpenAI TTS"""
+        try:
+            response = self.client.audio.speech.create(
+                model="tts-1",
+                voice="alloy",
+                input=text
+            )
+            
+            # Сохраняем аудио во временный файл
+            temp_file = "temp_voice_message.mp3"
+            response.stream_to_file(temp_file)
+            return temp_file
+            
+        except Exception as e:
+            logging.error(f"Ошибка при генерации голоса: {str(e)}")
+            return None
 
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Обработчик входящих сообщений"""
@@ -196,7 +230,15 @@ class PersonaBot:
             # Ограничиваем историю последними 10 сообщениями
             self.conversation_history[user_id] = self.conversation_history[user_id][-10:]
             
+            # Отправляем текстовый ответ
             await update.message.reply_text(reply)
+            
+            # Если включены голосовые сообщения, генерируем и отправляем аудио
+            if self.voice_enabled.get(user_id, False):
+                voice_file = await self.generate_voice(reply)
+                if voice_file:
+                    await update.message.reply_voice(voice=open(voice_file, 'rb'))
+                    os.remove(voice_file)  # Удаляем временный файл
             
         except Exception as e:
             logging.error(f"Ошибка при генерации ответа: {str(e)}")
@@ -214,6 +256,7 @@ class PersonaBot:
         # Добавляем обработчики команд
         application.add_handler(CommandHandler('start', self.start_command))
         application.add_handler(CommandHandler('help', self.help_command))
+        application.add_handler(CommandHandler('voice', self.voice_command))
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.handle_message))
         application.add_error_handler(self.error_handler)
 
