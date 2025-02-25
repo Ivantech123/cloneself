@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-persona-bot"
+version = "1.1.0"
+authors = [
+  { name="Ivantech123", email="your.email@example.com" },
+]
+description = "AI Persona Bot - Умный чат-бот с голосом и личностью"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "python-telegram-bot>=20.0",
+    "openai>=1.0.0",
+    "python-dotenv>=0.19.0",
+    "pydub>=0.25.1"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Ivantech123/cloneself"
+"Bug Tracker" = "https://github.com/Ivantech123/cloneself/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["ai_persona_bot"]
