@@ -1,6 +1,121 @@
-# AI Persona Bot
+# 🤖 AI Persona Bot
 
-Телеграм-бот, который имитирует стиль общения на основе сообщений из Telegram и постов из Дзен.
+<div align="center">
+
+![AI Persona Bot Banner](public/banner.png)
+
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://core.telegram.org/bots/api)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+
+[English](#english) | [Русский](#русский)
+
+</div>
+
+---
+
+<a name="english"></a>
+# 🇺🇸 English
+
+<div align="center">
+<img src="public/section-banners.png" alt="Features" width="600"/>
+</div>
+
+## 📋 About
+AI Persona Bot is an advanced Telegram bot that creates your digital twin by analyzing your communication style from messages and Yandex Zen posts. Features voice message support through OpenAI TTS.
+
+## ✨ Key Features
+- 🧠 Smart message style analysis
+- 🎤 Voice message cloning
+- 📱 Telegram integration
+- 📝 Yandex Zen content analysis
+- 🔄 Real-time learning
+
+<div align="center">
+<img src="public/features.gif" alt="Features Demo" width="600"/>
+</div>
+
+## 🛠️ Tech Stack
+- 🐍 Python 3.9+
+- 🤖 OpenAI GPT & TTS
+- 📱 Telegram Bot API
+- 🗄️ MongoDB
+- ⚡ FastAPI
+
+## 🚀 Quick Start
+```bash
+# Clone repository
+git clone https://github.com/Ivantech123/cloneself.git
+cd cloneself
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+
+# Run the bot
+python main.py
+```
+
+---
+
+<a name="русский"></a>
+# 🇷🇺 Русский
+
+## 📋 О проекте
+AI Persona Bot - продвинутый Telegram бот, создающий вашего цифрового двойника путем анализа стиля общения из сообщений и постов Яндекс Дзен. Поддерживает голосовые сообщения через OpenAI TTS.
+
+<div align="center">
+<img src="public/demo-ru.gif" alt="Демо" width="600"/>
+</div>
+
+## ✨ Возможности
+- 🧠 Умный анализ стиля сообщений
+- 🎤 Клонирование голоса
+- 📱 Интеграция с Telegram
+- 📝 Анализ контента Яндекс Дзен
+- 🔄 Обучение в реальном времени
+
+## 🛠️ Технологии
+- 🐍 Python 3.9+
+- 🤖 OpenAI GPT и TTS
+- 📱 Telegram Bot API
+- 🗄️ MongoDB
+- ⚡ FastAPI
+
+## 🚀 Быстрый старт
+```bash
+# Клонировать репозиторий
+git clone https://github.com/Ivantech123/cloneself.git
+cd cloneself
+
+# Установить зависимости
+pip install -r requirements.txt
+
+# Настроить переменные окружения
+cp .env.example .env
+# Отредактируйте .env, добавив свои API ключи
+
+# Запустить бота
+python main.py
+```
+
+## 📦 Структура проекта
+```
+src/
+├── bot/          # Telegram бот
+├── ai/           # AI модели
+├── voice/        # Голосовые функции
+├── storage/      # Работа с данными
+└── utils/        # Утилиты
+```
+
+## 📫 Контакты
+Email: abloko362@gmail.com
 
 ## Быстрый старт
 
